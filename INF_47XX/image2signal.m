@@ -24,21 +24,29 @@ function [signal] = image2signal(image,complicationID)
                 
                 img_s = size(image);
                 offset = 20;
-                for n = 1:img_s(2)
-                    signal = cat(1, signal, n);
-                    currentPixel = n + offset;
-                    while currentPixel <= numel(image)
+                
+                disp('La matrice est de taille:');
+                disp(img_s);
+                
+                for n = 1:img_s(1)
+                    for m = 0:img_s(2)-1
+                        currentPixel = n + m*5;
                         signal = cat(1, signal, currentPixel);
                         currentPixel = currentPixel + offset;
+                        %for p = 1:img_s(3)-1
+                        while currentPixel <= numel(image)
+                            signal = cat(1, signal, currentPixel);
+                            currentPixel = currentPixel + offset;
+                        end     
                     end
                 end
-                disp(signal)
+                
                 
             else
                 disp('This case is not covered');
             end
             
     end        
-    
+   disp(signal); 
    signal = uint8(signal); % makes sure output is still the same type!
 end

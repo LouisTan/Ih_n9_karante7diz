@@ -1,7 +1,7 @@
 function [signal] = image2signal(image,complicationID)
-    assert(~isempty(image) && (ndims(image)==2 || (ndims(image)==3 && size(image,3)==3)) && isa(image(1),'uint8'));
+    assert(~isempty(image) && (ismatrix(image) || (ndims(image)==3 && size(image,3)==3)) && isa(image(1),'uint8'));
+    signal = {};
     switch complicationID
-        signal
         %case 'blur'
             % TODO: IMPROVE ME (if needed!) signal = ...; @@@@@ break;
         %case 'dark'
@@ -24,20 +24,27 @@ function [signal] = image2signal(image,complicationID)
                 
                 img_s = size(image);
                 offset = 20;
+                
+                disp('La matrice est de taille:');
+                disp(img_s);
+                
                 for n = 1:img_s(1)
-                    disp(n);
-                    signal = cat(1, signal, n);
-                    if n + offset <= numel(image)
-                        signal = cat(1, signal, n + offset);
+                    for m = 0:img_s(2)-1
+                        currentPixel = n + m*5;
+                        signal = cat(1, signal, currentPixel);
+                        currentPixel = currentPixel + offset;
+                        %for p = 1:img_s(3)-1
+                        while currentPixel <= numel(image)
+                            signal = cat(1, signal, currentPixel);
+                            currentPixel = currentPixel + offset;
+                        end     
                     end
                 end
-                disp(signal)
-                
             else
                 disp('This case is not covered');
             end
             
-            
-    
+    end        
+   disp(signal); 
    signal = uint8(signal); % makes sure output is still the same type!
 end

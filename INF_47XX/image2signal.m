@@ -1,6 +1,6 @@
 function [signal] = image2signal(image,complicationID)
     assert(~isempty(image) && (ismatrix(image) || (ndims(image)==3 && size(image,3)==3)) && isa(image(1),'uint8'));
-    signal = {};
+    signal = [];
     switch complicationID
         %case 'blur'
             % TODO: IMPROVE ME (if needed!) signal = ...; @@@@@ break;
@@ -31,22 +31,23 @@ function [signal] = image2signal(image,complicationID)
                 for n = 1:img_s(1)
                     for m = 0:img_s(2)-1
                         currentPixel = n + m*5;
-                        signal = cat(1, signal, currentPixel);
+                        %La procedure prend plus de temps puisque la
+                        %variable est allouee dynamiquement..
+                        signal(end+1) = currentPixel;
                         currentPixel = currentPixel + offset;
-                        %for p = 1:img_s(3)-1
+                        %for k = 1:img_s(3)
                         while currentPixel <= numel(image)
-                            signal = cat(1, signal, currentPixel);
+                            signal(end+1) = currentPixel;
                             currentPixel = currentPixel + offset;
                         end     
                     end
                 end
-                
-                
             else
                 disp('This case is not covered');
             end
             
-    end        
+    end
+   disp('Voici le signal encode:');
    disp(signal); 
    signal = uint8(signal); % makes sure output is still the same type!
 end

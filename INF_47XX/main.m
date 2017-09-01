@@ -10,9 +10,9 @@ test_data = uint8(1:60); % mat will be 5x4 with 3 channels, or 6x10 with 1 chann
 
 test_mat_3ch = reshape(test_data,5,4,3);
 test_signal_3ch_real = uint8([1,21,41,6,26,46,11,31,51,16,36,56,2,22,42,7,27,47,12,32,52,17,37,57,3,23,43,8,28,48,13,33,53,18,38,58,4,24,44,9,29,49,14,34,54,19,39,59,5,25,45,10,30,50,15,35,55,20,40,60]);
-test_signal_3ch = image2signal(test_mat_3ch,'default'); %Error
+test_signal_3ch = image2signal(test_mat_3ch,'default');
 assert(isequal(test_signal_3ch(:),test_signal_3ch_real(:)));
-assert(isequal(test_mat_3ch,signal2image(test_signal_3ch,'default',size(test_mat_3ch))));
+assert(isequal(test_mat_3ch,signal2image(test_signal_3ch,'default',size(test_mat_3ch)))); %Error
 
 test_mat_1ch = reshape(test_data,6,10);
 test_signal_1ch_real = uint8([1:6:60,2:6:60,3:6:60,4:6:60,5:6:60,6:6:60]);

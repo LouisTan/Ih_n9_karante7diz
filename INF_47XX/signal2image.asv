@@ -24,6 +24,7 @@ function [image] = signal2image(signal,complicationID,img_size)
             i = 0;
             for n = 1:mat_s(1)
                 image(n) = signal(mod(1+3*i, 12));
+                signal = cat(signal(),cat(signal())
                 i = i + 1;
             end
             

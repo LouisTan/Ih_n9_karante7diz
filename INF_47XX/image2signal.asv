@@ -1,7 +1,7 @@
 function [signal] = image2signal(image,complicationID)
-    assert(~isempty(image) && (ismatrix(image) || (ndims(image)==3 && size(image,3)==3)) && isa(image(1),'uint8'));
-    signal = {};
+    assert(~isempty(image) && (ndims(image)==2 || (ndims(image)==3 && size(image,3)==3)) && isa(image(1),'uint8'));
     switch complicationID
+        signal
         %case 'blur'
             % TODO: IMPROVE ME (if needed!) signal = ...; @@@@@ break;
         %case 'dark'
@@ -24,12 +24,11 @@ function [signal] = image2signal(image,complicationID)
                 
                 img_s = size(image);
                 offset = 20;
-                for n = 1:img_s(2)
+                for n = 1:img_s(1)
+                    disp(n);
                     signal = cat(1, signal, n);
-                    currentPixel = n + offset;
-                    while currentPixel <= numel(image)
-                        signal = cat(1, signal, currentPixel);
-                        currentPixel = currentPixel + offset;
+                    if n + offset <= numel(image)
+                        signal = cat(1, signal, n + offset);
                     end
                 end
                 disp(signal)
@@ -38,7 +37,7 @@ function [signal] = image2signal(image,complicationID)
                 disp('This case is not covered');
             end
             
-    end        
+            
     
    signal = uint8(signal); % makes sure output is still the same type!
 end

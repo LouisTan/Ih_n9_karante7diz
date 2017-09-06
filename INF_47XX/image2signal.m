@@ -11,28 +11,28 @@ function [signal] = image2signal(image,complicationID)
         %case 'colorShift'
             % TODO: IMPROVE ME (if needed!) signal = ...; @@@@@ break;
         otherwise
-            % TODO: THIS IS THE BASE CASE, FIX ME FIRST! @@@@@
-            % assert(false); % missing impl here!
+            %Signal espere:[1,21,41,6,26,46,11,31,51,16,36,56,2,22,42,7,27,
+            %47,12,32,52,17,37,57,3,23,43,8,28,48,13,33,53,18,38,58,4,24,44,
+            %9,29,49,14,34,54,19,39,59,5,25,45,10,30,50,15,35,55,20,40,60]
+            
             if ndims(image) == 1
                 disp('This case is one dimension');
             elseif ndims(image) == 3
-                %col1 = image(:,:,1);
-                %col2 = image(:,:,2);
-                %col3 = image(:,:,3);
-                %disp(img_s(2));
-                %disp(numel(image));
                 
+                %%%%%%%DEBUG%%%%%%
+                %disp('L-image contient les donnees suivantes:');
+                %disp(image);
+                %
                 img_s = size(image);
-                offset = 20;
-                
-                disp('La matrice est de taille:');
-                disp(img_s);
+                %disp('La matrice est de taille:');
+                %disp(img_s);
+                % 
+                offset = img_s(1)*img_s(2);
                 
                 for n = 1:img_s(1)
                     for m = 0:img_s(2)-1
-                        currentPixel = n + m*5;
-                        %La procedure prend plus de temps puisque la
-                        %variable est allouee dynamiquement..
+                        currentPixel = n + m*img_s(1);
+                        %La variable est allouee dynamiquement
                         signal(end+1) = currentPixel;
                         currentPixel = currentPixel + offset;
                         %for k = 1:img_s(3)
@@ -45,9 +45,10 @@ function [signal] = image2signal(image,complicationID)
             else
                 disp('This case is not covered');
             end
-            
     end
-   disp('Voici le signal encode:');
-   disp(signal); 
-   signal = uint8(signal); % makes sure output is still the same type!
+   %%%%%%DEBUG%%%%%%
+   %
+   %disp('Voici le signal encode:');
+   %disp(signal); 
+   signal = uint8(signal); % makes sure the output is still the same type!
 end

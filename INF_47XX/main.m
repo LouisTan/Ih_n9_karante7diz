@@ -17,7 +17,7 @@ assert(isequal(test_mat_3ch,signal2image(test_signal_3ch,'default',size(test_mat
 test_mat_1ch = reshape(test_data,6,10);
 test_signal_1ch_real = uint8([1:6:60,2:6:60,3:6:60,4:6:60,5:6:60,6:6:60]);
 test_signal_1ch = image2signal(test_mat_1ch,'default');
-assert(isequal(test_signal_1ch(:),test_signal_1ch_real(:))); %Error
+assert(isequal(test_signal_1ch(:),test_signal_1ch_real(:)));
 assert(isequal(test_mat_1ch,signal2image(test_signal_1ch,'default',size(test_mat_1ch))));
 % if you get past this test, the first part is complete! the real image compression app is below...
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

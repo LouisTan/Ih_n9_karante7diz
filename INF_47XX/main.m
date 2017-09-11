@@ -61,7 +61,7 @@ for t=1:numel(test_pairs_info)
     tot_input_size = numel(input_next);
     tot_code_size = numel(signal_compr.string)/8 + numel(signal_compr.map)*2*2; % rough map size approximation, but close enough!
 
-    compr_rate = 1.0; % ... @@@@ TODO (check compression rate here!)
+    compr_rate = 1.0 - (numel(signal_compr.string)./(numel(signal_predict)*8));
     fprintf('\t... compression rate = %f\n',compr_rate);
 
     signal_error_decompr = decodeHuffman(signal_compr,0); % yes, this call is slow, matlab can't optimize it properly -- we have to live with it!

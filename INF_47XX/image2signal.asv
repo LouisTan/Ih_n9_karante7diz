@@ -32,10 +32,10 @@ function [signal] = image2signal(image,complicationID)
                     for m = 0:img_s(2)-1
                         currentPixel = n + m*img_s(1);
                         %La variable est allouee dynamiquement
-                        signal(end+1) = image(currentPixel);
+                        signal(end+1) = currentPixel;
                         currentPixel = currentPixel + offset;
                         while currentPixel <= numel(image)
-                            signal(end+1) = image(currentPixel);
+                            signal(end+1) = currentPixel;
                             currentPixel = currentPixel + offset;
                         end     
                     end

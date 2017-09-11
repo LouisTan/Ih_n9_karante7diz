@@ -43,8 +43,8 @@ for t=1:numel(test_pairs_info)
     assert(isequal(size(input_base),size(input_next)));
     fprintf('Processing image pair #%d...\n',test_pair_idx);
     test_pair_idx = test_pair_idx+1;
-    subplot(1,2,1); imshow(input_base); title('base');
-    subplot(1,2,2); imshow(input_next); title('next');
+    %subplot(1,2,1); imshow(input_base); title('base');
+    %subplot(1,2,2); imshow(input_next); title('next');
     
     % our goal is to use the 'input_base' matrix to predict 'input_next'; only the error on the
     % prediction is encoded, which means that if the prediction is good, the compression will also be good
@@ -71,6 +71,9 @@ for t=1:numel(test_pairs_info)
     input_next_decompr = signal2image(signal_next_decompr,complicationID,size(input_base));
     assert(isequal(size(input_next_decompr),size(input_next)));
 
+    subplot(1,2,1); imshow(input_next); title('original');
+    subplot(1,2,2); imshow(input_next_decompr); title('decompresse');
+    
     % the whole process should be LOSSLESS --- if the asserts below fail, there's a problem somewhere in the lib code!
     assert(isequal(input_next,input_next_decompr));
 

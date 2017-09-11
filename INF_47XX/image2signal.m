@@ -5,10 +5,6 @@ function [signal] = image2signal(image,complicationID)
     disp('La matrice de l-image est de taille:');
     disp(img_s);
     
-    
-    disp(img_s(1))
-    disp(img_s(2)) 
-    
     disp('L-image contient les donnees suivantes:');
     disp(image);
     
@@ -48,7 +44,7 @@ function [signal] = image2signal(image,complicationID)
             else disp('This case is not covered (image2signal)');
             end
    end
-   disp('Voici le signal encode:');
-   disp(signal); 
+   %disp('Voici le signal encode:');
+   %disp(signal); 
    signal = uint8(signal);
 end

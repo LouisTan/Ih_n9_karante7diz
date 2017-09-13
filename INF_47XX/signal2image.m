@@ -45,22 +45,21 @@ function [image] = signal2image(signal,complicationID,img_size)
                 end
             end
             
-            disp('Premiere dimension:')
-            disp(image1D);
-            disp('Deuxieme dimension:')
-            disp(image2D);
-            disp('Troisieme dimension:')
-            disp(image3D);
+            %disp('Premiere dimension:')
+            %disp(image1D);
+            %disp('Deuxieme dimension:')
+            %disp(image2D);
+            %disp('Troisieme dimension:')
+            %disp(image3D);
 
             %Placer les elements de chaque tableau dans une matrice
-            for n = 0:img_size(1)-1
+            for n = 1:img_size(1)
                 for m = 1:img_size(2)
-                    matrice1D(n+1,m,1) = image1D(m+n*(img_size(1)-1));
-                    matrice2D(n+1,m,1) = image2D(m+n*(img_size(1)-1));
-                    matrice3D(n+1,m,1) = image3D(m+n*(img_size(1)-1));
+                    matrice1D(n,m,1) = image1D(m+(n-1)*(img_size(2)));
+                    matrice2D(n,m,1) = image2D(m+(n-1)*(img_size(2)));
+                    matrice3D(n,m,1) = image3D(m+(n-1)*(img_size(2)));
                 end
             end
-
             %disp('Premiere matrice:')
             %disp(matrice1D);
             %disp('Deuxieme matrice:')

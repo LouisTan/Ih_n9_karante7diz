@@ -72,7 +72,7 @@ function [image] = signal2image(signal,complicationID,img_size)
         else disp('This case is not covered (signal2image)');
         end
     end
-    disp('Voici l-image decodee:')
-    disp(image)
+    %disp('Voici l-image decodee:')
+    %disp(image)
     image = uint8(image);
 end

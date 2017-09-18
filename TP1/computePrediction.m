@@ -9,7 +9,13 @@ function [signal_predict] = computePrediction(image_base,complicationID)
         if(strcmp(complicationID,'blur'))
             % TODO: IMPROVE ME! @@@@@
             %https://www.mathworks.com/help/images/ref/imgaussfilt.html
-            image_base = imgaussfilt(image_base, 2);
+            if ndims(image_base) == 2
+                image_base = imgaussfilt(image_base, 2);
+            elseif ndims(image_base) == 3
+                %https://www.mathworks.com/help/images/ref/imgaussfilt3.html
+                image_base = imgaussfilt(image_base, 3);
+            else disp('This case is not covered (computePrediction)');
+            end
             signal_predict = image2signal(image_base,2);
             assert(numel(signal_predict)==numel(image_base));
         elseif(strcmp(complicationID,'dark'))

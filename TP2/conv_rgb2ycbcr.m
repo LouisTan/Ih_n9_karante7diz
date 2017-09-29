@@ -36,7 +36,6 @@ function [Y, Cb, Cr] = conv_rgb2ycbcr(RGB, subsample)
         end
     z = z + 1;
     end
-    
     Y = 0.299*R + 0.587*G + 0.114*B;
     Cb = 128 + 0.564*(B - Y);
     Cr = 128 + 0.713*(R - Y);

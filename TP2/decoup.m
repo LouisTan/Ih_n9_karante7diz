@@ -6,27 +6,41 @@ function [blocks] = decoup(img,block_size)
     %error
     assert(numel(img)>0 && mod(size(img,1),block_size)==0 && mod(size(img,2),block_size)==0);
     
-    blocks = zeros(2);
-    line = zeros(1);
-    bloc = zeros(2);
-    
-    n = 0;
-    m = 0;
-    
+    %512x512 ou 256x256. La taille des images est un multiple de block_size
     img_s = size(img);
     
-    for i = 1:img_s(1)*img_s(2)/power(block_size,2)
-        for j = 1+m:block_size+m
-            for k = 1+n:block_size+n
-                line(k) = img((k-1)*img_s(1)+1);
+    %'blocks' contients plusieurs 'bloc' qui continnent des 'line'. soit
+    %des tableaux horizontaux de N elements, ou N = bloc_size
+    nb_blocks = img_s(1)*img_s(2)/power(block_size,2);
+    blocks = [];
+    line = [];
+    bloc = [];
+    
+    %p => rangees, m =>colonnes, n => itererateur du 'bloc'
+    p = 0;
+    n = 1;
+    m = 0;
+    for i = 1:nb_blocks
+        for j = 1:block_size
+            for k = 1:block_size
+                %             line                  colonne          rangee         
+                line(k) = img((k-1)*img_s(1) + n + m*img_s(1)*block_size + p*block_size);
             end
-            bloc(:,j) = line;
+            bloc(j,:) = line;
+            n = n + 1;
+       
+        line = [];
         end
-        n = n+5;
-        if n > img_s(2)
-            n = 0;
-            m = m+4;
+        blocks(:,:,i) = bloc;
+        m = m + 1;
+        n = 1;
+        
+        %Lorsque qu'une largeur de l'image a ete traitee:
+        if m == img_s(2)/block_size
+            m = 0;
+            p = p + 1;
         end
+  
     end
-
+    
 end

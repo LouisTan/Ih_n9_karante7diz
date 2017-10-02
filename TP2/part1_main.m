@@ -29,8 +29,8 @@ for t=1:numel(test_image_paths)
     
     % COMPRESSION
     [Y,Cb,Cr] = conv_rgb2ycbcr(input,USE_SUBSAMPLING);
-    %Error on next step
     blocks_y = decoup(Y);
+    disp(blocks_y)
     blocks_cb = decoup(Cb);
     blocks_cr = decoup(Cr);
     blocks = cat(3,blocks_y,blocks_cb,blocks_cr);

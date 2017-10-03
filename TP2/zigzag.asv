@@ -12,7 +12,7 @@ function [array] = zigzag(block)
                 x = j*(block_size-1)+i+1
                 array(end+1) = block(x);
             else
-                y = (i-j)*block_size+j+1
+                y = (i-j)*(block_size-1)+j+1
                 array(end+1) = block(y);
             end
             j = j+1;

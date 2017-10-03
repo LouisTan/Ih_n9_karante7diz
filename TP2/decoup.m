@@ -3,7 +3,7 @@ function [blocks] = decoup(img,block_size)
     if ~exist('block_size','var')
         block_size = 8;
     end
-    %error
+   
     assert(numel(img)>0 && mod(size(img,1),block_size)==0 && mod(size(img,2),block_size)==0);
     
     %512x512 ou 256x256. La taille des images est un multiple de block_size

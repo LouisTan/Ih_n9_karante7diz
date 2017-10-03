@@ -42,7 +42,7 @@ function [Y, Cb, Cr] = conv_rgb2ycbcr(RGB, subsample)
 
     %disp(YCbCr);
     
-    compr_rate = 1.0 - (numel(YCbCr)./(numel(RGB)));
-    fprintf('\t... compression rate = %f\n',compr_rate);
+    %compr_rate = 1.0 - (numel(YCbCr)./(numel(RGB)));
+    %fprintf('\t... compression rate = %f\n',compr_rate);
     
 end

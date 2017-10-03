@@ -67,20 +67,17 @@ for t=1:numel(test_image_paths)
     for b=1:size(blocks_vectors_decompr,2)
         blocks_quantif_decompr(:,:,b) = zigzag_inv(blocks_vectors_decompr(:,b));
     end
-    %disp(blocks_quantif_decompr);
-    
+    %disp(blocks_quantif_decompr)
     blocks_dct_decompr = zeros(size(blocks_quantif_decompr));
+    %disp(blocks_dct_decompr)
+    
     for b=1:size(blocks_quantif_decompr,3)
         blocks_dct_decompr(:,:,b) = quantif_inv(blocks_quantif_decompr(:,:,b),USE_QUANT_QUALITY);
     end
-    %disp(blocks_quantif_decompr);
-    
     blocks_decompr = zeros(size(blocks_dct_decompr),'uint8');
     for b=1:size(blocks_decompr,3)
         blocks_decompr(:,:,b) = dct_inv(blocks_dct_decompr(:,:,b));
     end
-    %disp(blocks_decompr);
-    
     Y_decompr = decoup_inv(blocks_decompr(:,:,1:size(blocks_y,3)),size(Y));
     Cb_decompr = decoup_inv(blocks_decompr(:,:,size(blocks_y,3)+1:size(blocks_y,3)+size(blocks_cb,3)),size(Cb));
     Cr_decompr = decoup_inv(blocks_decompr(:,:,size(blocks_y,3)+1+size(blocks_cb,3):end),size(Cr));
@@ -89,7 +86,6 @@ for t=1:numel(test_image_paths)
     if ~isequal(size(input_decompr),size(input))
         error('\n ERROR! Reconstructed image had different size from original... aborting.\n\n');
     end
-    
     figure;
     imshow(cat(2,input,input_decompr,imabsdiff(input,input_decompr)));
 

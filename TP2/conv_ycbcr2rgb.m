@@ -5,8 +5,8 @@ function [RGB] = conv_ycbcr2rgb(Y, Cb, Cr, subsample)
     assert(subsample || (isequal(size(Y),size(Cb)) && isequal(size(Y),size(Cr))));
     %RGB = zeros([size(Y,1) size(Y,2) 3],'uint8');
     
-    RGB = zeros(3);
-    YCbCr = zeros(3);
+    RGB = [];
+    YCbCr = [];
     
     YCbCr(:,:,1) = Y;
     YCbCr(:,:,2) = Cr;

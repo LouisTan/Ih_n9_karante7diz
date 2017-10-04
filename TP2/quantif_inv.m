@@ -16,9 +16,7 @@ function [block] = quantif_inv(block_quantif,quality)
             closest_quant_mat = quant_mats{quality_idx};
         end
     end
-    block = zeros(size(block_quantif));
-    
-    % @@@@ TODO (fill block)
-
+    %block = zeros(size(block_quantif));
+    block =  block_quantif ./ int16(closest_quant_mat);
 end
 

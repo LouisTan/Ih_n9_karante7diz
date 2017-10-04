@@ -9,17 +9,12 @@ function [array] = zigzag(block)
         j = max(0,i-block_size+1);
         while (j <= i && j < block_size)
             if mod(i,2) == 0
-                x = j*(block_size-1)+i+1
-                array(end+1) = block(x);
+                array(end+1) = block(j*(block_size-1)+i+1);
             else
-                y = (i-j)*block_size+j+1
-                array(end+1) = block(y);
+                array(end+1) = block((i-j)*block_size+j+1);
             end
             j = j+1;
             
         end
     end
-    
-    disp(array);
-
 end

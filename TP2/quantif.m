@@ -17,6 +17,6 @@ function [block_quantif] = quantif(block,quality)
         end
     end
     %block_quantif = zeros(size(block),'int16');
-    block_quantif = block ./ closest_quant_mat;
+    block_quantif = block .* closest_quant_mat;
 end
 

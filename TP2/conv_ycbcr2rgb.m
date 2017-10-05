@@ -4,38 +4,22 @@ function [RGB] = conv_ycbcr2rgb(Y, Cb, Cr, subsample)
     assert(~subsample || (size(Y,1)/2==size(Cb,1) && size(Y,1)/2==size(Cr,1) && size(Y,2)/2==size(Cb,2) && size(Y,2)/2==size(Cr,2)));
     assert(subsample || (isequal(size(Y),size(Cb)) && isequal(size(Y),size(Cr))));
     %RGB = zeros([size(Y,1) size(Y,2) 3],'uint8');
+    img_s = size(Y,1);
     
-    RGB = [];
-    YCbCr = [];
-    
-    YCbCr(:,:,1) = Y;
-    YCbCr(:,:,2) = Cr;
-    YCbCr(:,:,3) = Cr;
-    
-    img_s = size(YCbCr);
-  
-    p = 1:img_s(3);
-    n = 1:img_s(1);
-    m = 1:img_s(2);
-    
-    z = 1;
-    for k = p
-        y = 1;
-        for j = m
-            x = 1;
-            for i = n
-                RGB(x,y,z) = YCbCr(i,j,k);
-                x = x + 1;
-            end
-        y = y + 1;    
-        end
-    z = z + 1;
+    %4:4:2
+    if subsample
+        Y = Y(1:2:img_s);
+        Cb = Cb(1:2:img_s);
+        Cr =Cr(1:2:img_s);
+    %4:4:4  
+    %else
     end
-
-    RGB(:,:,1) = Y + 1.402*(Cr - 128);
-    RGB(:,:,2) = Y - 0.714*(Cr - 128) - 0.344*(Cb - 128);
-    RGB(:,:,3) = Y + 1.773*(Cb - 128);
-        
-    %disp(RGB);
     
+    R = Y + 1.402*(Cr - 128);
+    G = Y - 0.714*(Cr - 128) - 0.344*(Cb - 128);
+    B = Y + 1.773*(Cb - 128);
+    
+    RGB(:,:,1) = R;
+    RGB(:,:,2) = G;
+    RGB(:,:,3) = B;
 end

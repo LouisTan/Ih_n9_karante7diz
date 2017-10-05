@@ -7,14 +7,14 @@ block_size = 8;
 
     function [r_w] = racine(w)
         if w == 1
-            r_w = 1./sqrt(block_size);
+            r_w = sqrt(1./block_size);
         else
-            r_w = 2./sqrt(block_size);
+            r_w = sqrt(2./block_size);
         end
     end
 
     function [c_w] = cosinus(k,w)
-        c_w = cos( (pi*(2*k +1)*w) / (2*block_size) );
+        c_w = cos( (pi.*(2.*k +1).*w) / (2.*block_size) );
     end
 
     for u=1:block_size
@@ -23,10 +23,10 @@ block_size = 8;
             somme = 0;
             for i=1:block_size
                 for j=1:block_size
-                    somme = somme + cst*block(i,j)*cosinus(i,u)*cosinus(j,v);
-                end
+                    somme = somme + block(i,j).*cosinus(i,u).*cosinus(j,v);
+end
             end
-            block_dct(u,v) = somme;
+            block_dct(u,v) = cst.*somme;
 
         end
     end

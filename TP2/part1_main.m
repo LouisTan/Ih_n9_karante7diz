@@ -9,6 +9,7 @@ USE_SUBSAMPLING = 0;
 USE_QUANT_QUALITY = 100;
 
 test_image_paths = { ...
+    'data/tp2/colors.png',...       % 16x16
     'data/tp2/airplane.png', ...    % 512x512
     'data/tp2/baboon.png', ...      % 512x512
     'data/tp2/cameraman.tif', ...   % 256x256 
@@ -27,9 +28,14 @@ for t=1:numel(test_image_paths)
         input = input(:,:,1:3);
     end
     
-    % PREMIERE PARTIE
+%     figure;
+%     imshow(input);
+    
     % COMPRESSION ************************************
     [Y,Cb,Cr] = conv_rgb2ycbcr(input,USE_SUBSAMPLING); %512*512*3
+    
+%      figure;
+%      imshow(cat(3,Y,Cb,Cr));
     
     % DECOUPAGE **************************************
     blocks_y = decoup(Y); %8*8*4096
@@ -38,12 +44,19 @@ for t=1:numel(test_image_paths)
     
     blocks = cat(3,blocks_y,blocks_cb,blocks_cr); %8*8*12288
     
-    % TRANSFORMEE COSINUS DISCRETE *******************
+%     % TRANSFORMEE COSINUS DISCRETE *******************
+%     blocks_dct = zeros(size(blocks));
+%     for b=1:size(blocks,3)
+%         blocks_dct(:,:,b) = dct(blocks(:,:,b));
+%     end
+%     %disp(blocks_dct1); 8*8*12288
+
+% TRANSFORMEE COSINUS DISCRETE *******************
     blocks_dct = zeros(size(blocks));
     for b=1:size(blocks,3)
-        blocks_dct(:,:,b) = dct(blocks(:,:,b));
+        blocks_dct(:,:,b) = DCT1(blocks(:,:,b));
     end
-    %disp(blocks_dct); 8*8*12288
+    %disp(blocks_dct1); 8*8*12288
     
     % QUANTIFICATION *********************************
     blocks_quantif = zeros(size(blocks_dct),'int16');
@@ -63,10 +76,10 @@ for t=1:numel(test_image_paths)
     code = encodeHuff(blocks_vectors); %64*12288
 
     % @@@@ TODO: check compression rate here...
-    compr_rate = 1.0 - (numel(code)./(numel(input))*8);
-    fprintf('\t... compression rate = %f\n',compr_rate);
+    % compr_rate = 1.0 - (numel(code)./(numel(input))*8);
+    % fprintf('\t... compression rate = %f\n',compr_rate);
 
-    % DECODAGE DE HUFFMAN*******************************
+    % DECODAGE DE HUFFMAN*****************************
     blocks_vectors_decompr = decodeHuff(code,8*8); %64*12288
     
     % ZIG ZAG INVERSE
@@ -76,39 +89,42 @@ for t=1:numel(test_image_paths)
     end
     %disp(blocks_quantif_decompr); 8*8*12288
     
-    % DEQUANTIFICATION *********************************
+    % DEQUANTIFICATION *******************************
     blocks_dct_decompr = zeros(size(blocks_quantif_decompr));
     for b=1:size(blocks_quantif_decompr,3)
         blocks_dct_decompr(:,:,b) = quantif_inv(blocks_quantif_decompr(:,:,b),USE_QUANT_QUALITY);
     end
     %disp(blocks_quantif_decompr); 8*8*12288
     
-    % TRANSFORMEE COSINUS DISCRETE INVERSE *************
+%     TRANSFORMEE COSINUS DISCRETE INVERSE ***********
+%     blocks_decompr = zeros(size(blocks_dct_decompr),'uint8');
+%     for b=1:size(blocks_decompr,3)
+%         blocks_decompr(:,:,b) = dct_inv(blocks_dct_decompr(:,:,b));
+%     end
+%     disp(blocks_decompr); 8*8*12288
+
+    % TRANSFORMEE COSINUS DISCRETE INVERSE ***********
     blocks_decompr = zeros(size(blocks_dct_decompr),'uint8');
     for b=1:size(blocks_decompr,3)
-        blocks_decompr(:,:,b) = dct_inv(blocks_dct_decompr(:,:,b));
+        blocks_decompr(:,:,b) = IDCT(blocks_dct_decompr(:,:,b));
     end
     %disp(blocks_decompr); 8*8*12288
     
-    % DECOUPAGE ****************************************
+    % DECOUPAGE **************************************
     Y_decompr = decoup_inv(blocks_decompr(:,:,1:size(blocks_y,3)),size(Y)); %512*512
     Cb_decompr = decoup_inv(blocks_decompr(:,:,size(blocks_y,3)+1:size(blocks_y,3)+size(blocks_cb,3)),size(Cb));
     Cr_decompr = decoup_inv(blocks_decompr(:,:,size(blocks_y,3)+1+size(blocks_cb,3):end),size(Cr));
     
-    % DECOMPRESSION ************************************
+    % DECOMPRESSION **********************************
     input_decompr = conv_ycbcr2rgb(Y_decompr,Cb_decompr,Cr_decompr,USE_SUBSAMPLING); %512*512*3
-
     if ~isequal(size(input_decompr),size(input))
         error('\n ERROR! Reconstructed image had different size from original... aborting.\n\n');
     end
     
     figure;
     imshow(input_decompr);
+    %imshow(cat(2,input,input_decompr,imabsdiff(input,input_decompr)));
     
-    figure;
-    imshow(cat(2,input,input_decompr,imabsdiff(input,input_decompr)));
-    
-    % DEUXIEME PARTIE
     if(isequal(input,input_decompr))
         fprintf('\t... done. Compression is LOSSLESS.\n');
     else

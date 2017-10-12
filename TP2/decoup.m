@@ -29,9 +29,9 @@ function [blocks] = decoup(img,block_size)
                 line(k) = img((k-1)*img_s(1) + n + m*img_s(1)*block_size + p*block_size);
             end
             bloc(j,:) = line;
+            line = [];
             n = n + 1;
        
-        line = [];
         end
         blocks(:,:,i) = bloc;
         m = m + 1;

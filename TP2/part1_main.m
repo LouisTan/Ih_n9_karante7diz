@@ -6,10 +6,10 @@ clc;
 
 % you have to test all configurations by modifying the parameters below!
 USE_SUBSAMPLING = 0;
-USE_QUANT_QUALITY = 100;
+USE_QUANT_QUALITY = 50;
 
 test_image_paths = { ...
-    'data/tp2/colors.png',...       % 16x16
+    %'data/tp2/colors.png',...       % 16x16
     'data/tp2/airplane.png', ...    % 512x512
     'data/tp2/baboon.png', ...      % 512x512
     'data/tp2/cameraman.tif', ...   % 256x256 
@@ -47,7 +47,7 @@ for t=1:numel(test_image_paths)
     % TRANSFORMEE COSINUS DISCRETE *******************
     blocks_dct = zeros(size(blocks));
     for b=1:size(blocks,3)
-        blocks_dct(:,:,b) = DCT1(blocks(:,:,b));
+        blocks_dct(:,:,b) = dct(blocks(:,:,b));
     end
     
     % QUANTIFICATION *********************************

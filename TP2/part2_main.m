@@ -45,6 +45,7 @@ for frame_idx=1:sequence_frame_count
     else
         fprintf('offset = [%d,%d];  eqm = %f\n',offset_vec(1),offset_vec(2),eqm);
     end
+    
     next_block_pos = default_block_pos + offset_vec;
     frame_display = frame; % clone
     frame_display(next_block_pos(1):next_block_pos(1)+block_size-1,next_block_pos(2):next_block_pos(2)+block_size-1) = 255; % draw a white rectangle over the current block location, and refill interior with original intensnty values

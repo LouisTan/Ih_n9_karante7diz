@@ -17,18 +17,18 @@ block_size = 8;
         c_w = cos( (pi.*(2.*k +1).*w) / (2.*block_size) );
     end
 
-    for u=1:block_size
-        for v=1:block_size
-            cst = racine(u)*racine(v);
-            somme = 0;
-            for i=1:block_size
-                for j=1:block_size
-                    somme = somme + block(i,j).*cosinus(i,u).*cosinus(j,v);
-end
+for u=1:block_size
+    for v=1:block_size
+        cst = racine(u)*racine(v);
+        somme = 0;
+        for i=1:block_size
+            for j=1:block_size
+                somme = somme + block(i,j).*cosinus(i,u).*cosinus(j,v);
             end
-            block_dct(u,v) = cst.*somme;
-
         end
+        block_dct(u,v) = cst.*somme;
+        
     end
+end
 
 end

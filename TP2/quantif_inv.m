@@ -17,6 +17,6 @@ function [block] = quantif_inv(block_quantif,quality)
         end
     end
     %block = zeros(size(block_quantif));
-    block =  block_quantif ./ int16(closest_quant_mat);
+    block =  block_quantif .* int16(closest_quant_mat);
 end
 

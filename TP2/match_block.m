@@ -31,14 +31,12 @@ function [out_dir, out_eqm] = match_block(block, block_pos, search_region, searc
     blockMSE = [];
 
     out_dir = [];
-    out_eqm = 9999999;
-    %num = 0;
-    %p => rangees, m =>colonnes, n => itererateur du 'bloc'
+    out_eqm = 255;
+    
     p = 0;
     n = 1;
     m = 0;
     for i = 1:power(block_nb, 2)
-        
         for j = 1:block_size
             for k = 1:block_size
                 lineMSE(k) = search_region((k-1)*search_region_size + n + ...
@@ -70,7 +68,6 @@ function [out_dir, out_eqm] = match_block(block, block_pos, search_region, searc
         end
         
         blockMSE = [];
-        %num = num + 1;
     end
 
 end

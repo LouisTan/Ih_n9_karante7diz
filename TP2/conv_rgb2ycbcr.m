@@ -20,4 +20,9 @@ function [Y, Cb, Cr] = conv_rgb2ycbcr(RGB, subsample)
     Cb = 128 + 0.564*(B - Y);
     Cr = 128 + 0.713*(R - Y);
     
+    R = RGB(:,:,1);
+    G = RGB(:,:,2);
+    B = RGB(:,:,3);
+    
+    Y = 0.299*R + 0.587*G + 0.114*B;
 end

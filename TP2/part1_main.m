@@ -5,8 +5,8 @@ clear;
 clc;
 
 % you have to test all configurations by modifying the parameters below!
-USE_SUBSAMPLING = 0;
-USE_QUANT_QUALITY = 50;
+USE_SUBSAMPLING = 1;
+USE_QUANT_QUALITY = 100;
 
 test_image_paths = { ...
     %'data/tp2/colors.png',...       % 16x16
@@ -30,19 +30,16 @@ for t=1:numel(test_image_paths)
     
     % COMPRESSION ************************************
     [Y,Cb,Cr] = conv_rgb2ycbcr(input,USE_SUBSAMPLING);
-    
+ 
+%     figure
+%     imshow(cat(3,Y(1:2:size(Y,1),1:2:size(Y,2),1),Cb,Cr));
+
     % DECOUPAGE **************************************
     blocks_y = decoup(Y);
     blocks_cb = decoup(Cb);
     blocks_cr = decoup(Cr);
     
     blocks = cat(3,blocks_y,blocks_cb,blocks_cr);
-    
-%     % TRANSFORMEE COSINUS DISCRETE *******************
-%     blocks_dct = zeros(size(blocks));
-%     for b=1:size(blocks,3)
-%         blocks_dct(:,:,b) = dct(blocks(:,:,b));
-%     end
 
     % TRANSFORMEE COSINUS DISCRETE *******************
     blocks_dct = zeros(size(blocks));
@@ -66,8 +63,8 @@ for t=1:numel(test_image_paths)
     code = encodeHuff(blocks_vectors); %64*12288
 
     % @@@@ TODO: check compression rate here...
-    % compr_rate = 1.0 - (numel(code)./(numel(input))*8);
-    % fprintf('\t... compression rate = %f\n',compr_rate);
+    compr_rate = 1.0 - (numel(code.string) ./ (numel(code.map))*4);
+    fprintf('\t... compression rate = %f\n',compr_rate);
 
     % DECODAGE DE HUFFMAN*****************************
     blocks_vectors_decompr = decodeHuff(code,8*8); %64*12288
@@ -84,18 +81,12 @@ for t=1:numel(test_image_paths)
         blocks_dct_decompr(:,:,b) = quantif_inv(blocks_quantif_decompr(:,:,b),USE_QUANT_QUALITY);
     end
     
-%     TRANSFORMEE COSINUS DISCRETE INVERSE ***********
-%     blocks_decompr = zeros(size(blocks_dct_decompr),'uint8');
-%     for b=1:size(blocks_decompr,3)
-%         blocks_decompr(:,:,b) = dct_inv(blocks_dct_decompr(:,:,b));
-%     end
-
     % TRANSFORMEE COSINUS DISCRETE INVERSE ***********
     blocks_decompr = zeros(size(blocks_dct_decompr),'uint8');
     for b=1:size(blocks_decompr,3)
-        blocks_decompr(:,:,b) = IDCT(blocks_dct_decompr(:,:,b));
+        blocks_decompr(:,:,b) = dct_inv(blocks_dct_decompr(:,:,b));
     end
-    
+
     % DECOUPAGE **************************************
     Y_decompr = decoup_inv(blocks_decompr(:,:,1:size(blocks_y,3)),size(Y));
     Cb_decompr = decoup_inv(blocks_decompr(:,:,size(blocks_y,3)+1:size(blocks_y,3)+size(blocks_cb,3)),size(Cb));
@@ -107,9 +98,7 @@ for t=1:numel(test_image_paths)
     if ~isequal(size(input_decompr),size(input))
         error('\n ERROR! Reconstructed image had different size from original... aborting.\n\n');
     end
-    
-    figure;
-    imshow(input_decompr);
+
     %Cast de double a uint8
     input_decompr = uint8(input_decompr);
     imshow(cat(2,input,input_decompr,imabsdiff(input,input_decompr)));

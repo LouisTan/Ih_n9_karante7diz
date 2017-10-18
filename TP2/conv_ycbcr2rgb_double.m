@@ -19,27 +19,27 @@ function [RGB] = conv_ycbcr2rgb(Y, Cb, Cr, subsample)
     if subsample
         for j=1:2:img_s
             for k=1:2:img_s
-                Cb_1(k) = Cb(n*img_s/2 + m);
-                Cb_1(k + 1) = Cb(n*img_s/2 + m);
+                Cb_1(k) = double(Cb(n*img_s/2 + m));
+                Cb_1(k + 1) = double(Cb(n*img_s/2 + m));
                 
-                Cr_1(k) = Cr(n*img_s/2 + m);
-                Cr_1(k + 1) = Cr(n*img_s/2 + m);
+                Cr_1(k) = double(Cr(n*img_s/2 + m));
+                Cr_1(k + 1) = double(Cr(n*img_s/2 + m));
                 
                 m = m + 1;
             end
-            Cb_2(:,j) = Cb_1;
-            Cb_2(:,j+1) = Cb_1;
+            Cb_2(:,j) = double(Cb_1);
+            Cb_2(:,j+1) = double(Cb_1);
             
-            Cr_2(:,j) = Cr_1;
-            Cr_2(:,j+1) = Cr_1;
+            Cr_2(:,j) = double(Cr_1);
+            Cr_2(:,j+1) = double(Cr_1);
             
             n = n + 1;
             m = 1;
         end
         
-        Cb = Cb_2;
-        Cr = Cr_2;
-        Y = Y;
+        Cb = double(Cb_2);
+        Cr = double(Cr_2);
+        Y = double(Y);
     end
     
     RGB(:,:,1) = Y + 1.402*(Cr - 128);

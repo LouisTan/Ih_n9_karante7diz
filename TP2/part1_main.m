@@ -5,18 +5,18 @@ clear;
 clc;
 
 % you have to test all configurations by modifying the parameters below!
-USE_SUBSAMPLING = 1;
+USE_SUBSAMPLING = 0;
 USE_QUANT_QUALITY = 100;
 
 test_image_paths = { ...
-    %'data/tp2/colors.png',...       % 16x16
-    'data/tp2/airplane.png', ...    % 512x512
-    'data/tp2/baboon.png', ...      % 512x512
-    'data/tp2/cameraman.tif', ...   % 256x256 
-    'data/tp2/lena.png', ...        % 512x512
-    'data/tp2/logo.tif', ...        % 256x256
-    'data/tp2/logo_noise.tif', ...  % 256x256
-    'data/tp2/peppers.png', ...     % 512x512
+%     'data/tp2/colors.png', ...      % 16x16
+      'data/tp2/airplane.png'    % 512x512
+%     'data/tp2/baboon.png', ...      % 512x512
+%     'data/tp2/cameraman.tif', ...   % 256x256 
+%     'data/tp2/lena.png', ...        % 512x512
+%     'data/tp2/logo.tif', ...        % 256x256
+%     'data/tp2/logo_noise.tif', ...  % 256x256
+%     'data/tp2/peppers.png', ...     % 512x512
 };
 
 for t=1:numel(test_image_paths)
@@ -63,7 +63,7 @@ for t=1:numel(test_image_paths)
     code = encodeHuff(blocks_vectors); %64*12288
 
     % @@@@ TODO: check compression rate here...
-    compr_rate = 1.0 - (numel(code.string) ./ (numel(code.map))*4);
+    compr_rate = 1.0 - (numel(code.string)/(numel(input)*8));
     fprintf('\t... compression rate = %f\n',compr_rate);
 
     % DECODAGE DE HUFFMAN*****************************

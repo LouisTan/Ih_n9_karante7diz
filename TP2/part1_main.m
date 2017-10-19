@@ -5,8 +5,8 @@ clear;
 clc;
 
 % you have to test all configurations by modifying the parameters below!
-USE_SUBSAMPLING = 0;
-USE_QUANT_QUALITY = 100;
+USE_SUBSAMPLING = 1;
+USE_QUANT_QUALITY = 10;
 
 test_image_paths = { ...
 %   'data/tp2/colors.png', ...      % 16x16

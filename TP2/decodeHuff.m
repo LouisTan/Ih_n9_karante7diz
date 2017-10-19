@@ -32,9 +32,9 @@ function signal = decodeHuff(code,chunk_size)
             end
         end
         string_end_idx = string_end_idx + 1;
-        if mod(int32(string_end_idx),int32(numel(string)/50))==0
-            fprintf('decode huff @ %d percent\n',int32(100*double(string_end_idx)/numel(string)));
-        end
+%         if mod(int32(string_end_idx),int32(numel(string)/50))==0
+%             fprintf('decode huff @ %d percent\n',int32(100*double(string_end_idx)/numel(string)));
+%         end
     end
     assert(mod(signal_idx,chunk_size)==0);
     signal = reshape(signal(1:signal_idx),chunk_size,[]);

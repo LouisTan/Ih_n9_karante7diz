@@ -39,11 +39,18 @@ function [RGB] = conv_ycbcr2rgb(Y, Cb, Cr, subsample)
         
         Cb = Cb_2;
         Cr = Cr_2;
-        Y = Y;
     end
     
-    RGB(:,:,1) = Y + 1.402*(Cr - 128);
-    RGB(:,:,2) = Y - 0.714*(Cr - 128) - 0.344*(Cb - 128);
-    RGB(:,:,3) = Y + 1.773*(Cb - 128);
+%     if class(Cr) == 'uint8'
+        RGB(:,:,1) = Y + 1.402*(Cr - 128);
+        RGB(:,:,2) = Y - 0.714*(Cr - 128) - 0.344*(Cb - 128);
+        RGB(:,:,3) = Y + 1.773*(Cb - 128);
+%     else
+%         RGB(:,:,1) = double(Y) + 1.402*(Cr - 128);
+%         RGB(:,:,2) = double(Y) - 0.714*(Cr - 128) - 0.344*(Cb - 128);
+%         RGB(:,:,3) = double(Y) + 1.773*(Cb - 128);
+
+
+
 
 end

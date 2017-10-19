@@ -9,14 +9,14 @@ USE_SUBSAMPLING = 0;
 USE_QUANT_QUALITY = 100;
 
 test_image_paths = { ...
-%     'data/tp2/colors.png', ...      % 16x16
-      'data/tp2/airplane.png'    % 512x512
-%     'data/tp2/baboon.png', ...      % 512x512
-%     'data/tp2/cameraman.tif', ...   % 256x256 
-%     'data/tp2/lena.png', ...        % 512x512
-%     'data/tp2/logo.tif', ...        % 256x256
-%     'data/tp2/logo_noise.tif', ...  % 256x256
-%     'data/tp2/peppers.png', ...     % 512x512
+%   'data/tp2/colors.png', ...      % 16x16
+    'data/tp2/airplane.png', ...    % 512x512
+    'data/tp2/baboon.png', ...      % 512x512
+    'data/tp2/cameraman.tif', ...   % 256x256 
+    'data/tp2/lena.png', ...        % 512x512
+    'data/tp2/logo.tif', ...        % 256x256
+    'data/tp2/logo_noise.tif', ...  % 256x256
+    'data/tp2/peppers.png', ...     % 512x512
 };
 
 for t=1:numel(test_image_paths)
@@ -101,6 +101,7 @@ for t=1:numel(test_image_paths)
 
     %Cast de double a uint8
     input_decompr = uint8(input_decompr);
+    figure
     imshow(cat(2,input,input_decompr,imabsdiff(input,input_decompr)));
     
     if(isequal(input,input_decompr))
@@ -113,5 +114,6 @@ for t=1:numel(test_image_paths)
         fprintf(['\t... done. Compression is LOSSY (PSNR=' num2str(PSNR) 'dB, and ' num2str(double(nnz(max(input~=input_decompr,[],3)))*100/(numel(input)/3)) '%% of pixels have altered values).\n']);
     end
     
+    close all
 end
 fprintf('all done\n');

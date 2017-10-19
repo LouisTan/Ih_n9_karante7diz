@@ -1,4 +1,4 @@
-% conv_rgb2ycbcr: converts an 8-bit-depth RGB image to Y'CbCr format using optional 4:2:0 subsampling
+  % conv_rgb2ycbcr: converts an 8-bit-depth RGB image to Y'CbCr format using optional 4:2:0 subsampling
 function [Y, Cb, Cr] = conv_rgb2ycbcr(RGB, subsample)
     assert(numel(RGB)>0 && size(RGB,3)==3);
     %Y = zeros(size(RGB,1),size(RGB,2),'uint8');

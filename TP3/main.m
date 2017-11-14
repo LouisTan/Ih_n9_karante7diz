@@ -4,14 +4,17 @@ close all;
 clear;
 clc;
 
-
+vrobj = VideoReader('INF4710_TP3_A2017_video.avi');
+figure
 
 fprintf('Program starts...\n');
-for i = 0:0
+for t=1:vrobj.NumberOfFrames
+    img = read(vrobj,t);
     
-
-
+    G = Convo(img);
+    
+    imshow(G); 
+    title('Sobel gradient');
+   
 end
-
-close all
 fprintf('\n...all done.');

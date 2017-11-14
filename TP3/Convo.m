@@ -3,6 +3,7 @@ function [G] = Convo(img)
     for n=1:3
         for i=1:size(img,1)-2
             for j=1:size(img,2)-2
+                %Tiré de https://angeljohnsy.blogspot.com/2011/12/sobel-edge-detection.html
                 %Sobel mask for x-direction:
                 Gx=((2*img(i+2,j+1,n)+img(i+2,j,n)+img(i+2,j+2,n))-(2*img(i,j+1,n)+img(i,j,n)+img(i,j+2,n)));
                 %Sobel mask for y-direcgtion:
@@ -13,6 +14,7 @@ function [G] = Convo(img)
             end
         end
     end
+    %Tiré de https://www.mathworks.com/matlabcentral/answers/154075-how-to-scale-normalize-values-in-a-matrix-to-be-between-1-and-1
     %Rescaling
     A = G(:,:,1);
     B = G(:,:,2);

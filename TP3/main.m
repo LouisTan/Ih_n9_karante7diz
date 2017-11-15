@@ -15,11 +15,14 @@ for t=1:vrobj.NumberOfFrames
     imshow(G); 
     title('Sobel gradient');
     
-    img = Seuil(G);
-    imshow(img); 
+    bin_img = Seuil(G);
+    imshow(bin_img); 
     title('Threshold');
     
-    
+    dilate_img = Dilate(bin_img);
+    imshow(dilate_img);
+    title('Dilatation');
+
    
 end
 fprintf('\n...all done.');

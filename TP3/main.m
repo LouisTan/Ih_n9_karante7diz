@@ -1,20 +1,18 @@
 % INF4710 A2017 TP3
+global p_in_data_array
+global p_out_data_array
+global index
 
-close all;
-clear;
-clc;
-
-%vrobj = VideoReader('INF4710_TP3_A2017_video.avi');
-vrobj = VideoReader('INF4710_TP3_A2017_video.avi');
+%vrobj = VideoReader('samples\INF4710_TP3_A2017_video.avi');
+vrobj = VideoReader('samples\test.avi');
 img_t_1 = zeros(238,318);
 p_in_data = []; p_out_data = [];
 
 fprintf('Program starts...\n');
 for t=1:vrobj.NumberOfFrames
-    disp(t);
+    fprintf('Frame %d @ index %d\n',t,index);
     img = read(vrobj,t);
     
-
     G = Convo(img);
 %     figure, imshow(G); 
 %     title('Sobel gradient');
@@ -40,9 +38,12 @@ for t=1:vrobj.NumberOfFrames
     end
     
 end
-y = 1:vrobj.NumberOfFrames;
-scatter(y,p_in_data,25,'red');
-hold on
-scatter(y,p_out_data,25,'green');
+% y = 1:vrobj.NumberOfFrames;
+% scatter(y,p_in_data,25,'red');
+% hold on
+% scatter(y,p_out_data,25,'green');
 
-fprintf('\n...all done.');
+p_in_data_array = [p_in_data_array;p_in_data];
+p_out_data_array = [p_out_data_array;p_out_data];
+
+%fprintf('\n...all done.');

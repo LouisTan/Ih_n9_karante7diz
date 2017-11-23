@@ -1,5 +1,5 @@
 % INF4710 A2017 TP3
-vrobj = VideoReader('samples\test3.avi');
+vrobj = VideoReader('samples\test.avi');
 
 p_in_data = []; 
 p_out_data = [];
@@ -9,8 +9,10 @@ fprintf('Program starts...\n');
 
 for t=1:vrobj.NumberOfFrames
     fprintf('Frame %d\n',t);
+    start_time = clock();
+
     img = read(vrobj,t);
-    imshow(img);
+%     imshow(img);
     
     h = Histo(img);
     
@@ -18,24 +20,30 @@ for t=1:vrobj.NumberOfFrames
 %     figure, imshow(G); 
 %     title('Sobel gradient');
 
-    T=0.25;
+    T=0.28;
     bin_img = Seuil(G,T);
 %     imshow(bin_img); 
 %     title('Threshold');
     
-    dilate_img = Dilate(bin_img);
+    D=4;
+    dilate_img = Dilate(bin_img,D);
 %     imshow(dilate_img);
 %     title('Dilatation');
 
     img_t_1 = [];
 
     if t > 1
+        if mod(t,5) == 0
+            elapsed_time = etime(clock(), start_time);
+            fprintf('There is approx. %f sec left\n',elapsed_time*(vrobj.NumberOfFrames - t))
+        end
+        
         img_t_1 = read(vrobj,t-1);
         h1 = Histo(img_t_1);
         
         G_t_1= Convo(img_t_1);
         bin_img_t_1 = Seuil(G_t_1,T);
-        dilate_img_t_1 = Dilate(bin_img_t_1);
+        dilate_img_t_1 = Dilate(bin_img_t_1,D);
         
         [p_in,p_out] = Ratio(bin_img,dilate_img,bin_img_t_1,dilate_img_t_1);  
         p_in_data(t) = p_in;
@@ -65,6 +73,6 @@ y = 1:vrobj.NumberOfFrames-1;
 plot(y,d_data,'red');
 hold on
 
-save('results2.mat')
+save('results5.mat')
 
 fprintf('\n...all done.');

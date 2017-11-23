@@ -1,5 +1,5 @@
 % INF4710 A2017 TP3
-vrobj = VideoReader('samples\test.avi');
+vrobj = VideoReader('samples\test4.avi');
 
 p_in_data = []; 
 p_out_data = [];
@@ -49,12 +49,20 @@ for t=1:vrobj.NumberOfFrames
         p_in_data(t) = p_in;
         p_out_data(t) = p_out;
         
+        H = -100; L = -200;
+        if p_in_data(t) > H || p_out_data(t) > H
+            fprintf('Detection H @ %d (p)',t);
+        elseif p_in_data(t) > L || p_out_data(t) > L
+            fprintf('Detection L @ %d (p)',t);
+        end
+        
         d = Histo_dist(h,h1);
         
-        if d(1) > 0.4 || d(2) > 0.4 || d(3) > 0.4
-            fprintf('detected with histogram [frame = %d]\n',t);
-        elseif d(1) > 0.01 || d(2) > 0.01 || d(3) > 0.01
-            fprintf('detected with histogram [frame = %d]\n',t);
+        H = 0.4; L = 0.2;
+        if d(1) > H || d(2) > H || d(3) > H
+            fprintf('Detection H @ %d (h)',t);
+        elseif d(1) > L || d(2) > L || d(3) > L
+            fprintf('Detection L @ %d (h)',t);
         end
         
         d_data = [d;d_data];
@@ -73,6 +81,6 @@ y = 1:vrobj.NumberOfFrames-1;
 plot(y,d_data,'red');
 hold on
 
-save('results5.mat')
+save('results4.mat')
 
 fprintf('\n...all done.');

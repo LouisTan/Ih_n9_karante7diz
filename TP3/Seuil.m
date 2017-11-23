@@ -1,10 +1,10 @@
-function [image] = Seuil(img)
+function [image] = Seuil(img,T)
     for i=1:size(img,1)
         for j=1:size(img,2)
-            % Seuil déterminé à main pour fin d'illustration.
-            if img(i,j,1)>0.30 || img(i,j,2)>0.30 || img(i,j,3)>0.30
+            if img(i,j,1)>T || img(i,j,2)>T || img(i,j,3)>T
                 img(i,j,:)=255;
-            else img(i,j,:)=0;
+            else
+                img(i,j,:)=0;
             end
         end
     end

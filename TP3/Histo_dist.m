@@ -1,4 +1,4 @@
-function [d] = hist_dist(hist, hist1)
+function [d] = Histo_dist(hist, hist1)
     d = [];
     
     for i = 1:size(hist,1)

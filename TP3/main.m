@@ -1,5 +1,5 @@
 % INF4710 A2017 TP3
-vrobj = VideoReader('samples\test6.avi');
+vrobj = VideoReader('samples\INF4710_TP3_A2017_video_mpeg4.avi');
 
 p_in_data = []; 
 p_out_data = [];
@@ -27,8 +27,8 @@ for t=1:vrobj.NumberOfFrames
     
     D=3;
     dilate_img = Dilate(bin_img,D);
-    imshow(dilate_img);
-    title('Dilatation');
+%     imshow(dilate_img);
+%     title('Dilatation');
 
     img_t_1 = [];
 
@@ -81,6 +81,6 @@ y = 1:vrobj.NumberOfFrames-1;
 plot(y,d_data,'red');
 hold on
 
-save('results6.mat')
+save('results1.mat')
 
 fprintf('\n...all done.');

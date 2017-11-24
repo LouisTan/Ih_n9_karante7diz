@@ -1,5 +1,5 @@
 % INF4710 A2017 TP3
-vrobj = VideoReader('samples\test4.avi');
+vrobj = VideoReader('samples\test6.avi');
 
 p_in_data = []; 
 p_out_data = [];
@@ -20,15 +20,15 @@ for t=1:vrobj.NumberOfFrames
 %     figure, imshow(G); 
 %     title('Sobel gradient');
 
-    T=0.28;
+    T=0.25;
     bin_img = Seuil(G,T);
 %     imshow(bin_img); 
 %     title('Threshold');
     
-    D=4;
+    D=3;
     dilate_img = Dilate(bin_img,D);
-%     imshow(dilate_img);
-%     title('Dilatation');
+    imshow(dilate_img);
+    title('Dilatation');
 
     img_t_1 = [];
 
@@ -81,6 +81,6 @@ y = 1:vrobj.NumberOfFrames-1;
 plot(y,d_data,'red');
 hold on
 
-save('results4.mat')
+save('results6.mat')
 
 fprintf('\n...all done.');

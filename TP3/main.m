@@ -1,5 +1,5 @@
 % INF4710 A2017 TP3
-vrobj = VideoReader('samples\INF4710_TP3_A2017_video_mpeg4.avi');
+vrobj = VideoReader('samples\INF4710_TP3_A2017_video.avi');
 
 p_in_data = []; 
 p_out_data = [];
@@ -49,7 +49,7 @@ for t=1:vrobj.NumberOfFrames
         p_in_data(t) = p_in;
         p_out_data(t) = p_out;
         
-        H = -100; L = -200;
+        H = -125; L = -200;
         if p_in_data(t) > H || p_out_data(t) > H
             fprintf('Detection H @ %d (p)',t);
         elseif p_in_data(t) > L || p_out_data(t) > L
@@ -58,12 +58,12 @@ for t=1:vrobj.NumberOfFrames
         
         d = Histo_dist(h,h1);
         
-        H = 0.4; L = 0.2;
-        if d(1) > H || d(2) > H || d(3) > H
-            fprintf('Detection H @ %d (h)',t);
-        elseif d(1) > L || d(2) > L || d(3) > L
-            fprintf('Detection L @ %d (h)',t);
-        end
+%         H = 0.4; L = 0.2;
+%         if d(1) > H || d(2) > H || d(3) > H
+%             fprintf('Detection H @ %d (h)',t);
+%         elseif d(1) > L || d(2) > L || d(3) > L
+%             fprintf('Detection L @ %d (h)',t);
+%         end
         
         d_data = [d;d_data];
     end
